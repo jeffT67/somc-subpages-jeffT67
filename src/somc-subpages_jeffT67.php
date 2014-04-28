@@ -5,8 +5,8 @@
  */
 /*
   Plugin Name: somcsubpages_jeffT67
-  Plugin URI:
-  Description: Display subpages
+  Plugin URI: https://github.com/jeffT67/somc-subpages-jeffT67/tree/master/dist
+  Description: Display all sub pages for the current page
   Author: Jeff Thier
   Version: 1.0
   Author URI: http://www.klixo.se
@@ -30,45 +30,45 @@ class somcsubpages_jeffT67 extends WP_Widget {
 
     public function __construct() {
 
-        $widget_ops = array('classname' => 'somcsubpages_jeffT67', 'description' => __('Display all sub pages for the current page', 'subpage')
+        $widget_ops = array('classname' => 'somcsubpages_jeffT67', 'description' => __('Display all sub pages for the current page', 'subPages')
         );
 
-        $this->WP_Widget('somcsubpages_jeffT67', __('somcsubpages_jeffT67 Widget', 'subpage'), $widget_ops);
+        $this->WP_Widget('somcsubpages_jeffT67', __('somcsubpages_jeffT67 Widget', 'subPages'), $widget_ops);
     }
 
     public function form($instance) {
         $instance = wp_parse_args((array) $instance, array('title' => ''));
         $title = $instance['title'];
         ?>
-        <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'subpage'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
+        <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'subPages'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></label></p>
         <p>
-            <label for="<?php echo $this->get_field_id('sort_order'); ?>"><?php _e('Sorting Order', 'subpage'); ?></label>
+            <label for="<?php echo $this->get_field_id('sort_order'); ?>"><?php _e('Sorting Order', 'subPages'); ?></label>
             <select name="<?php echo $this->get_field_name('sort_order'); ?>" id="<?php echo $this->get_field_id('sort_order'); ?>" class="widefat">	
                 <?php
                 $order_options = array(
-                    'ASC' => __('Ascending', 'subpage'),
-                    'DESC' => __('Descending', 'subpage'),
+                    'ASC' => __('Ascending', 'subPages'),
+                    'DESC' => __('Descending', 'subPages'),
                 );
                 foreach ($order_options as $option_key => $option_value) {
                     ?>
-                    <option <?php selected($instance['sort_order'], $option_key); ?> value="<?php echo esc_attr($option_key); ?>"><?php echo __($option_value, 'subpage'); ?></option>
+                    <option <?php selected($instance['sort_order'], $option_key); ?> value="<?php echo esc_attr($option_key); ?>"><?php echo __($option_value, 'subPages'); ?></option>
                 <?php } ?>      
             </select>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id('thumb_size'); ?>"><?php _e('Thumbnail Size', 'subpage'); ?></label>
+            <label for="<?php echo $this->get_field_id('thumb_size'); ?>"><?php _e('Thumbnail Size', 'subPages'); ?></label>
             <select name="<?php echo $this->get_field_name('thumb_size'); ?>" id="<?php echo $this->get_field_id('thumbSize'); ?>" class="widefat">	
                 <?php
                 $thumbSizeOpts = array(
-                    '8' => __('8x8', 'subpage'),
-                    '16' => __('16x16', 'subpage'),
-                    '24' => __('24x24', 'subpage'),
-                    '32' => __('32x32', 'subpage'),
-                    '48' => __('48x48', 'subpage'),
+                    '8' => __('8x8', 'subPages'),
+                    '16' => __('16x16', 'subPages'),
+                    '24' => __('24x24', 'subPages'),
+                    '32' => __('32x32', 'subPages'),
+                    '48' => __('48x48', 'subPages'),
                 );
                 foreach ($thumbSizeOpts as $option_key => $option_value) {
                     ?>
-                    <option <?php selected($instance['thumb_size'], $option_key); ?> value="<?php echo esc_attr($option_key); ?>"><?php echo __($option_value, 'subpage'); ?></option>
+                    <option <?php selected($instance['thumb_size'], $option_key); ?> value="<?php echo esc_attr($option_key); ?>"><?php echo __($option_value, 'subPages'); ?></option>
                 <?php } ?>      
             </select>
         </p>
@@ -92,7 +92,7 @@ class somcsubpages_jeffT67 extends WP_Widget {
         }
 
         echo $before_widget;
-        $title = empty($instance['title']) ? 'Pages' : apply_filters('widget_title', $instance['title']);
+        $title = empty($instance['title']) ? 'Sub pages' : apply_filters('widget_title', $instance['title']);
         $sort_order = empty($instance['sort_order']) ? 'ASC' : apply_filters('widget_sort', $instance['sort_order']);
         $this->thumbSize = empty($instance['thumb_size']) ? '24' : $instance['thumb_size'];
 
@@ -109,12 +109,10 @@ class somcsubpages_jeffT67 extends WP_Widget {
         );
 
         $subPages = get_children($args);
-
-
         if ($subPages) {
             $this->listPages($subPages);
         }
-
+        
         echo $after_widget;
     }
 
